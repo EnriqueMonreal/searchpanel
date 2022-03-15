@@ -1,0 +1,170 @@
+<div id="div-contenedor" class="m-control m-container m-searchpanel">
+  <div id="buscador-panel-title">Buscador de Espacios Productivos</div>
+  <div id="opcionesBuscador">
+    <label id="buscarEspacioProductivo" class="actived">Espacios Productivos</label>
+    <label id="buscarParcela">Parcelas Libres</label>
+    <label id="buscarEmpresa">Directorio de Empresas</label>
+    <div id="buscador-panel-body">
+      <div id="buscadorEspaciosProductivos">
+        <div id="ciudadesIndustriales" class="opciones-busqueda">
+          <label class="label-opciones-busqueda" for="switchCiudadesIndustriales">Ciudades Industriales</label>
+          <label class="switchCiudadesIndustriales">
+            <input type="checkbox">
+            <span class="slider round"></span>
+          </label>
+          <span class="info-opciones">* Filtrar por Ciudades Adscritas al proyecto Ciudades Industriales</span>
+        </div>
+        <div id="provinciasEspaciosProductivos" class="opciones-busqueda">
+          <label class="label-opciones-busqueda" for="selectProvinciasEspaciosProductivos">Provincias</label>
+          <select id="selectProvinciasEspaciosProductivos" name="selectProvinciasEspaciosProductivos" class="multi"
+            disabled>
+            <option value="" selected> -- Provincias -- </option>
+          </select>
+          <span class="info-opciones">* Seleccione Provincias</span>
+        </div>
+        <div id="municipios" class="opciones-busqueda">
+          <label class="label-opciones-busqueda" for="selectMunicipiosEspaciosProductivos">Municipios</label>
+          <select id="selectMunicipiosEspaciosProductivos" name="selectMunicipiosEspaciosProductivos" class="multi"
+            disabled>
+            <option value="" selected> -- Municipios -- </option>
+          </select>
+          <span class="info-opciones">* Seleccione Municipios</span>
+        </div>
+        <div id="tipologia" class="opciones-busqueda">
+          <label class="label-opciones-busqueda" for="selectTipologia">Tipología</label>
+          <select id="selectTipologiaEspaciosProductivos" name="selectTipologiaEspaciosProductivos" class="multi">
+            <option value="" selected> -- Tipologías -- </option>
+          </select>
+          <span class="info-opciones">* Seleccione Tipología de Espacio Productivo</span>
+        </div>
+        <div id="subtipologia" class="opciones-busqueda">
+          <label class="label-opciones-busqueda" for="selectSubTipologia">Subtipología</label>
+          <select id="selectSubTipologiaEspaciosProductivos" name="selectSubTipologiaEspaciosProductivos">
+            <option value="" selected>Todas las Subtipologías</option>
+            <option value="subtipologia1">Subtilopogia1</option>
+            <option value="subtipologia2">Subtilopogia2</option>
+            <option value="subtipologia3">Subtilopogia3</option>
+            <option value="subtipologia4">Subtilopogia4</option>
+            <option value="subtipologia5">Subtilopogia5</option>
+            <option value="subtipologia6">Subtilopogia6</option>
+            <option value="subtipologia7">Subtilopogia7</option>
+            <option value="subtipologia8">Subtilopogia8</option>
+            <option value="subtipologia9">Subtilopogia9</option>
+            <option value="subtipologia10">Subtilopogia10</option>
+          </select>
+          <span class="info-opciones">* Seleccione una Subtipología de Espacio Productivo</span>
+        </div>
+        <div id="nombre" class="opciones-busqueda">
+          <label class="label-opciones-busqueda" for="textboxNombreEspacioProductivo">Nombre
+            Espacio
+            Productivo</label>
+          <input type="text" name="textboxNombreEspacioProductivo" id="textboxNombreEspacioProductivo" maxlength="150"
+            placeholder="Introduzca un Nombre ...">
+          <span class="info-opciones">* Escriba el nombre del Espacio Productivo</span>
+        </div>
+      </div>
+      <div id="buscadorParcelas">       
+        <div id="provinciasParcelas" class="opciones-busqueda">
+          <label class="label-opciones-busqueda" for="selectProvinciasParcelas">Provincias</label>
+          <select id="selectProvinciasParcelas" name="selectProvinciasParcelas" class="multi" disabled>
+            <option value="" selected> -- Provincias -- </option>
+          </select>
+          <span class="info-opciones">* Seleccione Provincias</span>
+        </div>
+        <div id="municipiosParcelas" class="opciones-busqueda">
+          <label class="label-opciones-busqueda" for="selectMunicipiosParcelas">Municipios</label>
+          <select id="selectMunicipiosParcelas" name="selectMunicipiosParcelas" class="multi" disabled>
+            <option value="" selected> -- Municipios -- </option>
+          </select>
+          <span class="info-opciones">* Seleccione Municipios</span>
+        </div>
+        <div id="espacioProductivoParcelas" class="opciones-busqueda">
+          <label class="label-opciones-busqueda" for="textboxEspacioProductivoParcelas">Espacio
+            Productivo</label>
+          <input id="textboxEspacioProductivoParcelas" name="textboxEspacioProductivoParcelas" type="text"
+            maxlength="150" placeholder="Espacio Productivo ...">
+          <span class="info-opciones">* Escriba el nombre del Espacio Productivo</span>
+        </div>
+        <div id="tipologiaParcela" class="opciones-busqueda">
+          <label class="label-opciones-busqueda" for="selectTipologiaParcelas">Tipología
+            Parcela</label>
+          <select id="selectTipologiaParcelas" name="selectTipologiaParcelas" class="multi">
+            <option value="" selected>Tipología Parcela...</option>
+            <option value="1">Menor de 2.000 m&sup2;</option>
+            <option value="2">Entre 2.000 m&sup2 y 5.000 m&sup2;</option>
+            <option value="3">Entre 5000 m&sup2; y 10.000 m&sup2;</option>
+            <option value="4">Mayor de 10.000 m&sup2;</option>
+          </select>
+          <span class="info-opciones">* Seleccione Tipología de Parcela</span>
+        </div>
+      </div>
+      <div id="buscadorEstablecimientos">
+        <div id="espacioProductivo" class="opciones-busqueda">
+          <label class="label-opciones-busqueda" for="textboxEspacioProductivo">Espacio
+            Productivo</label>
+          <input id="textboxEspacioProductivo" name="textboxEspacioProductivo" type="text" maxlength="150"
+            placeholder="Espacio Productivo ...">
+          <span class="info-opciones">* Escriba el nombre del Espacio Productivo</span>
+        </div>
+        <div id="actividad" class="opciones-busqueda">
+          <label class="label-opciones-busqueda" for="selectActividad">Actividad</label>
+          <select id="selectActividad" name="selectActividad">
+            <option value="" selected>Actividad ...</option>
+            <option value="Aeronaútico">Aeronaútico</option>
+            <option value="Agroalimentario (industrial, no cooperativas)">Agroalimentario
+              (industrial, no cooperativas)</option>
+            <option value="Metalurgia">Metalurgia</option>
+            <option value="Otras actividades">Otras actividades</option>
+            <option value="Productos metálicos">Productos metálicos</option>
+            <option value="Químico">Químico</option>
+            <option value="TIC">TIC</option>
+            <option value="Vehículos de transporte">Vehículos de transporte</option>
+          </select>
+          <span class="info-opciones">* Seleccione Actividad de la Empresa</span>
+        </div>
+        <div id="empresa" class="opciones-busqueda">
+          <label class="label-opciones-busqueda" for="textboxEstablecimiento">Nombre
+            Establecimiento</label>
+          <input id="textboxEstablecimiento" name="textboxEstablecimiento" type="text" maxlength="150"
+            placeholder="Establecimiento ...">
+          <span class="info-opciones">* Escriba el nombre del Establecimiento (Razón
+            Social)</span>
+        </div>
+      </div>
+      <div id="resultadosBusqueda" class="results">
+        <div id="results" class="results">
+          <table class="center">
+            <tbody>
+              <tr>
+                <th class="noResults" colspan="2">
+                  <p>No se ha encontrado ningún resultado</p>
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div id="pagination" class="page">
+        <div class="page">
+          <table style="width:100%">
+            <tbody>
+              <tr>
+                <td id="previusPage" class="g-cartografia-flecha-izquierda">Atras</td>
+                <td id="recordsInfo"><span id="recordsNumber" class="found">0</span> de
+                  <span id="recordsTotal" class="total">0</span>
+                </td>
+                <td id="nextPage" class="g-cartografia-flecha-derecha">Siguiente</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="button">
+        <button id="loadButton" class="load" title="Buscar" disabled>
+          <i class="g-cartografia-posicion3"></i> Buscar</button>
+        <button id="clearButton" class="clear" title="Limpiar Resultados" disabled>
+          <i class="g-cartografia-check4"></i> Limpiar</button>
+      </div>
+    </div>
+  </div>
+</div>
