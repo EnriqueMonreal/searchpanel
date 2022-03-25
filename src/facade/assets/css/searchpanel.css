@@ -11,6 +11,17 @@
 
 /** Estilos propios*/
 
+.refCatResult {
+  height: auto !important;
+  border-top: 0 !important;
+  cursor: help !important;
+}
+
+.refCat {
+  color: #00897b !important;
+  font-weight: 600;
+}
+
 .m-searchpanel{
   font-family: Muli,sans-serif!important;
     font-size: 13px;
@@ -135,6 +146,22 @@ select {
   
 }
 
+select[multiple] {
+  height: auto;
+  width: 100%;
+  cursor: pointer;
+  padding: 0 7px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #6c6c6c;
+}
+/* select[multiple]:focus,
+select[multiple]:active {
+  size: 3;
+  height: auto; 
+} */
+
 input[type="text"] {
   display: block !important;
   width: 95%;
@@ -242,4 +269,109 @@ input[type='checkbox']:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+#resultadosBusqueda {
+  height: calc(100vh - 183px);
+  display: none;
+  overflow-y: auto;
+}
+
+#resultadosBusqueda > div > table {
+  border-collapse: collapse;
+  width: 100%;
+  height: 130px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  /* cursor: pointer; */
+  cursor: pointer;
+  margin: 0;
+  border-top: 1px solid #00897b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#resultadosBusqueda > div > table:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+}
+
+#resultadosBusqueda > div > table td.key {
+  font-weight: 700 !important;
+  font-size: 0.9 em !important;
+  padding-left: 5px !important;
+}
+
+#resultadosBusqueda > div > table td.value {
+  font-size: 0.9 em !important;
+  text-align: right !important;
+  padding-right: 5px !important;
+}
+
+#resultadosBusqueda > div > table tr {
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+  border-bottom-style: dashed;
+}
+
+#pagination {
+  display: none;
+}
+
+#pagination > div.page {
+  margin-top: 0;
+  width: 100%;
+  background-color: #f0f0f0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: 700 !important;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+#pagination > div.page > td.g-cartografia-flecha-izquierda {
+  visibility: hidden;
+  float: left;
+  margin-right: 5px;
+  cursor: pointer;
+  font-weight: 700 !important;
+}
+
+#pagination > div.page > td.g-cartografia-flecha-derecha {
+  visibility: hidden;
+  float: right;
+  margin-left: 5px;
+  cursor: pointer;
+  font-weight: 700 !important;
+}
+
+#previusPage {
+  visibility: hidden;
+  font-weight: 700 !important;
+  text-align: left;
+  padding-left: 5px;
+  width: 30%;
+}
+
+#previusPage:hover {
+  cursor: pointer;
+}
+
+#nextPage {
+  visibility: hidden;
+  font-weight: 700 !important;
+  text-align: right;
+  padding-right: 5px;
+  width: 30%;
+}
+
+#nextPage:hover {
+  cursor: pointer;
+}
+
+#recordsInfo {
+  font-weight: 700 !important;
+  text-align: center;
+  width: 30%;
 }

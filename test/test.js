@@ -2,10 +2,13 @@ import SearchPanel from 'facade/searchpanel';
 
 const map = M.map({
   container: 'mapjs',
+  controls:['overviewmap','scale','panzoom'],
+  layers:[],
   wmcfiles: [
-    'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_callejero_simplificado.xml*Callejero',
-    'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_satelite_simplificado.xml*Satélite',
-    'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_hibrido_simplificado.xml*Híbrido'
+    // 'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_callejero_simplificado.xml*Callejero',
+    // 'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_satelite_simplificado.xml*Satélite',
+    // 'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_hibrido_simplificado.xml*Híbrido',
+    'https://www.juntadeandalucia.es/institutodeestadisticaycartografia/visores/espacios-productivos/wmc/WMC_IDE_eepp.xml*Contexto'
   ],
   projection: 'EPSG:25830*m'
 });
@@ -20,13 +23,14 @@ var arrayMunicipiosByProvincias = new Array();
 var arrayTipologias = new Array()
 var arrayObjetosRecuperados = new Array()
 var selectedProvinciasEspaciosProductivos = new Array()
+var selectedSolridParcelas = new Array()
 var selectedSolridEspaciosProductivos = new Array()
 var selectedMunicipiosEspaciosProductivos = new Array()
 var selectedTipologiasEspaciosProductivos = new Array()
 var geosearchUrlEspaciosProductivos = "https://www.juntadeandalucia.es/institutodeestadisticaycartografia/geobusquedas/eepp-f1/search?fq=";
 var geosearchUrlDirectorioEmpresas = "https://www.juntadeandalucia.es/institutodeestadisticaycartografia/geobusquedas/eepp-f1_directorio/search?fq=";
 var geosearchUrlParcelas = "https://www.juntadeandalucia.es/institutodeestadisticaycartografia/geobusquedas/eepp-f1_parcelas/search?fq=";
-var otherParameters = "&rows=1000&start=0&srs=EPSG%3A25830";
+var otherParameters = "&rows=10000&start=0&srs=EPSG%3A25830";
 var maxRecordsPage = 5;
 var totalRecords = null;
 var page_number = 1;
@@ -98,6 +102,7 @@ const configSearchPanel = {
     arrayTipologias: arrayTipologias,
     arrayObjetosRecuperados: arrayObjetosRecuperados,
     selectedProvinciasEspaciosProductivos: selectedProvinciasEspaciosProductivos,
+    selectedSolridParcelas: selectedSolridParcelas,
     selectedSolridEspaciosProductivos: selectedSolridEspaciosProductivos,
     selectedMunicipiosEspaciosProductivos: selectedMunicipiosEspaciosProductivos,
     selectedTipologiasEspaciosProductivos: selectedTipologiasEspaciosProductivos,
@@ -122,39 +127,7 @@ const configSearchPanel = {
     selectedTipologiaEspaciosProductivos:selectedTipologiaEspaciosProductivos,
     espaciosProductivosList:espaciosProductivosList
   },
-  selector: {
-    buscadorButtonEl: buscadorButtonEl,
-    buscadorAreaEl: buscadorAreaEl,
-    buscadorCloseButtonEl: buscadorCloseButtonEl,
-    buscarEspacioProductivoEl: buscarEspacioProductivoEl,
-    buscarEmpresaEl: buscarEmpresaEl,
-    buscarParcelaEl: buscarParcelaEl,
-    buscadorEspaciosProductivosEl: buscadorEspaciosProductivosEl,
-    buscadorEstablecimientosEl: buscadorEstablecimientosEl,
-    buscadorParcelasEl: buscadorParcelasEl,
-    resultadosBusquedaEl: resultadosBusquedaEl,
-    loadButtonEl: loadButtonEl,
-    clearButtonEl: clearButtonEl,
-    selectProvinciasEspaciosProductivosEL: selectProvinciasEspaciosProductivosEL,
-    selectProvinciasParcelasEL: selectProvinciasParcelasEL,
-    SelectMunicipiosEspaciosProductivosEL: SelectMunicipiosEspaciosProductivosEL,
-    selectMunicipiosParcelasEL: selectMunicipiosParcelasEL,
-    SelectTipologiaEspaciosProductivosEl: SelectTipologiaEspaciosProductivosEl,
-    SelectSubTipologiaEspaciosProductivosEl: SelectSubTipologiaEspaciosProductivosEl,
-    SelectTipologiaParcelasEl: SelectTipologiaParcelasEl,
-    textboxNombreEspacioProductivoEl: textboxNombreEspacioProductivoEl,
-    SelectActividadEl: SelectActividadEl,
-    textboxEspacioProductivoEl: textboxEspacioProductivoEl,
-    textboxEstablecimientoEl: textboxEstablecimientoEl,
-    textboxEspacioProductivoParcelasEl: textboxEspacioProductivoParcelasEl,
-    resultsEl: resultsEl,
-    paginationEl: paginationEl,
-    previusPageEl: previusPageEl,
-    nextPageEl: nextPageEl,
-    recordsTotalEl: recordsTotalEl,
-    recordsNumberEl: recordsNumberEl,
-    textboxProvinciaParcelasEl:textboxProvinciaParcelasEl,
-    textboxMunicipioParcelasEl:textboxMunicipioParcelasEl
+  selector: {    
   },
 };
 
