@@ -57,8 +57,8 @@ export default class SearchPanel extends M.Plugin {
     this.panel_ = new M.ui.Panel('panelSearchPanel', {
       collapsible: true,
       className: 'm-searchpanel',
-      position: M.ui.position.TR,
-      collapsedButtonClass: 'g-cartografia-flecha-izquierda',
+      position: M.ui.position.TR,       
+      collapsedButtonClass: 'g-cartografia-prismaticos',
     });
     this.panel_.addControls(this.controls_);
     map.addPanels(this.panel_);

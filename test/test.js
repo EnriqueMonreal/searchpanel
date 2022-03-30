@@ -2,8 +2,8 @@ import SearchPanel from 'facade/searchpanel';
 
 const map = M.map({
   container: 'mapjs',
-  controls:['overviewmap','scale','panzoom'],
-  layers:[],
+  controls: ['overviewmap', 'scale', 'panzoom'],
+  layers: [],
   wmcfiles: [
     // 'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_callejero_simplificado.xml*Callejero',
     // 'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_satelite_simplificado.xml*Satélite',
@@ -12,6 +12,255 @@ const map = M.map({
   ],
   projection: 'EPSG:25830*m'
 });
+
+
+/**
+         * Plugin gestor de capas */
+var configGroups = [];
+
+/** Se aÃ±ade grupo capas auxiliares **/
+configGroups.push({
+  title: "Espacios Productivos: Información auxiliar",
+  description: "Información auxiliar en Espacios Productivos de Andalucía",
+  overlays: [
+    new M.layer.WMS({
+      url: "http://factorylab01.ieca.junta-andalucia.es/services/eepp/wms?",
+      name: "lineas_electricas_eepp",
+      legend: "Lí­neas eléctricas",
+      transparent: true,
+      tiled: true,
+    }),
+    new M.layer.WMS({
+      url: "http://factorylab01.ieca.junta-andalucia.es/services/eepp/wms?",
+      name: "subestacion_electrica",
+      legend: "Subestaciones eléctricas",
+      transparent: true,
+      tiled: true,
+    }),
+    new M.layer.WMS({
+      url: "http://factorylab01.ieca.junta-andalucia.es/services/eepp/wms?",
+      name: "gasoductos_eepp",
+      legend: "Gasoductos",
+      transparent: true,
+      tiled: true,
+    }),
+    new M.layer.WMS({
+      url: "http://factorylab01.ieca.junta-andalucia.es/services/eepp/wms?",
+      name: "energia_telecomunicaciones",
+      legend: "Telecomunicaciones",
+      transparent: true,
+      tiled: true,
+    }),
+  ],
+});
+
+/** Se añade grupo Datos de referencia **/
+configGroups.push({
+  title: "Datos de referencia",
+  description:
+    "Conjunto de capas que permiten la generación de un mapa de Andalucí­a básico",
+  overlays: [
+    new M.layer.WMS({
+      url: "https://ovc.catastro.meh.es/Cartografia/WMS/ServidorWMS.aspx?",
+      name: "Catastro",
+      legend: "Catastro publicada por la dirección general de Catastro",
+      version: "1.1.1",
+      transparent: true,
+      tiled: true,
+    }),
+    new M.layer.WMTS(
+      {
+        url: "https://www.ign.es/wmts/pnoa-ma",
+        name: "OI.OrthoimageCoverage",
+        legend:
+          "PNOA máxima actualidad publicada por el Instituto Geográfico Nacional",
+        version: "1.3.0",
+        transparent: true,
+        tiled: true,
+      },
+      {
+        params: {
+          layers: "OI.OrthoimageCoverage",
+          styles: "default",
+        },
+      }
+    ),
+  ],
+});
+
+var configBaseMaps = [{
+  img: './plugins/managelayers/img/osm.png',
+  layer: new M.layer.OSM({
+    legend: 'OpenStreet Maps'
+  })
+},
+{
+  img: './plugins/managelayers/img/pnoa.png',
+  layer: new M.layer.WMTS({
+    url: 'https://www.ign.es/wmts/pnoa-ma',
+    name: "OI.OrthoimageCoverage",
+    legend: 'PNOA máxima actualidad publicada por el Instituto Geográfico Nacional',
+    version: '1.3.0',
+    transparent: false,
+    tiled: true
+  }, {
+    params: {
+      layers: 'OI.OrthoimageCoverage',
+      styles: 'default'
+    }
+  })
+},
+{
+  img: './plugins/managelayers/img/ign.png',
+  layer: new M.layer.WMS({
+    url: 'https://www.ign.es/wms-inspire/ign-base',
+    name: "IGNBaseTodo",
+    legend: 'Mapa base del Instituto Geográfico Nacional',
+    version: '1.3.0',
+    transparent: false,
+    tiled: true
+  })
+},
+{
+  img: './plugins/managelayers/img/catastro.png',
+  layer: new M.layer.WMS({
+    url: 'https://ovc.catastro.meh.es/Cartografia/WMS/ServidorWMS.aspx?',
+    name: 'Catastro',
+    legend: 'Catastro publicada por la dirección general de Catastro',
+    version: '1.1.1',
+    transparent: false,
+    tiled: true
+  })
+}
+];
+
+//Plugin managelayers
+var paramsPlugin = {
+  options: {
+    panel: {
+      className: 'clasePrivada',
+      collapsedClass: 'g-cartografia-capas2',
+      tooltip: 'Gestión de capas'
+    }
+  },
+  config: {
+    thematicLayers: {
+      params: {
+        groups: configGroups
+      },
+      options: {
+        iconClass: 'g-cartografia-mundo2',
+        tooltip: 'Favoritas'
+      }
+    },
+    baseLayers: {
+      params: {
+        baseMaps: [], //configBaseMaps,
+        activatedBlankMap: false
+      },
+      options: {
+        tooltip: 'Capas de fondo'
+      }
+    }
+  }
+}
+
+var sp = new M.plugin.Sidepanel();
+sp.on(M.evt.ADDED_TO_MAP, () => {
+  sp.addPlugin(new M.plugin.ManageLayers(paramsPlugin), 1);
+  sp.addGroup({
+    icon: "g-cartografia-mas2",
+    title: "Añadir Capas",
+    order: 2,
+    plugins: [
+      { plugin: new M.plugin.AddServices(), order: 1 },
+      { plugin: new M.plugin.AddLayers(), order: 2 }
+    ]
+  });
+  sp.addGroup({
+    icon: "g-cartografia-zoom",
+    title: "Búsquedas",
+    order: 3,
+    plugins: [
+      { plugin: new M.plugin.Toponomysearch(), order: 1 },
+      { plugin: new M.plugin.CatalogSearch({ geoNetworkUrl: 'http://www.ideandalucia.es/catalogo/inspire/srv/spa' }), order: 2 },
+      { plugin: new M.plugin.CatastroSearch(), order: 3 },
+      { plugin: new M.plugin.XYLocator(), order: 4 },
+      { plugin: new M.plugin.SearchstreetGeosearch(), order: 5 }
+    ]
+  });
+
+  sp.addGroup({
+    icon: "g-cartografia-herramienta",
+    title: "Herramientas",
+    order: 4,
+    plugins: [
+      { plugin: new M.plugin.Drawing(), order: 1 },
+      { plugin: new M.plugin.Measurebar(), order: 2 },
+      {
+        plugin: new M.plugin.Printer({
+          "params": {
+            "pages": {
+              "creditos": "Impresión generada a través de Mapea"
+            },
+            "layout": {
+              "outputFilename": "mapea_${yyyy-MM-dd_hhmmss}"
+            }
+          },
+          // Pueden establecerse los valores de los desplegables
+          'options': {
+            'layout': 'imagen apaisada',
+            'format': 'png',
+            'dpi': '127'
+          }
+        }),
+        order: 3
+      }
+    ]
+  });
+
+  sp.addGroup({
+    icon: "g-cartografia-guardar",
+    title: "Gestionar Sesión",
+    order: 5,
+    plugins: [
+
+      { plugin: new M.plugin.Wmc(), order: 1 }
+    ]
+  });
+
+  // sp.addPlugin(new M.plugin.SearchPanel());
+  sp.addPlugin(new M.plugin.MaxExtZoom({ position: 'TR', }))
+  sp.addPlugin(new M.plugin.Featureinfo());
+
+  //sp.addPlugin(new M.plugin.Attributions(paramsAttributions))
+});
+//plugin Attributions
+
+var paramsAttributions = {
+  params: {
+    includeRequired: true,
+    attributions: [
+      "TXT*Infraestructura de Datos Espaciales de Andalucía", [
+        'HTML*<p>IDEAndalucia Participa en:</p><p><a href="https://www.opengeospatial.org/" target="_blank"><img src="http://www.ideandalucia.es/visor/logos/logo_ogc.gif" alt="Open Geospatial Consortium" title="Open Geospatial Consortium" height="100%"></a>&nbsp;&nbsp;&nbsp;<a href="https://www.idee.es/" target="_blank"><img src="http://www.ideandalucia.es/visor/logos/logo_idee.gif" alt="Infraestructura de Datos Espaciales de España" title="Infraestructura de Datos Espaciales de España" height="100%"></a>&nbsp;&nbsp;&nbsp;<a href="https://inspire-geoportal.ec.europa.eu/" target="_blank"><img src="http://www.ideandalucia.es/visor/logos/logo_inspire.gif" alt="Infrastructure for Spatial Information in the European Community" title="Infrastructure for Spatial Information in the European Community" height="100%"></a></p>'
+      ]
+    ]
+  },
+  options: {
+    panel: {
+      className: 'clasePrivada',
+      collapsedClass: 'g-cartografia-ayuda',
+      tooltip: 'Panel Attributions'
+    }
+  }
+};
+
+
+
+map.addPlugin(new M.plugin.Attributions(paramsAttributions));
+map.addPlugin(sp);
+
+
 
 /*VARIABLES GLOBALES*/
 var atributosBusqueda = ["municipio", "provincia", "solrid", "tipologia"];
@@ -51,45 +300,6 @@ var espaciosProductivosList = new Array();
 var rowResult = null;
 /* FIN VARIABLES GLOBALES */
 
-/* SELECTOR DE ELEMENTOS */
-let buscadorButtonEl = document.getElementById("buscador-button");
-let buscadorAreaEl = document.getElementById("buscador-area");
-let buscadorCloseButtonEl = document.getElementById("buscador-close-button");
-let buscarEspacioProductivoEl = document.getElementById("buscarEspacioProductivo");
-let buscarEmpresaEl = document.getElementById("buscarEmpresa");
-let buscarParcelaEl = document.getElementById("buscarParcela");
-let buscadorEspaciosProductivosEl = document.getElementById("buscadorEspaciosProductivos");
-let buscadorEstablecimientosEl = document.getElementById("buscadorEstablecimientos");
-let buscadorParcelasEl = document.getElementById("buscadorParcelas");
-
-let resultadosBusquedaEl = document.getElementById("resultadosBusqueda");
-let loadButtonEl = document.getElementById("loadButton");
-let clearButtonEl = document.getElementById("clearButton");
-// let textboxProvinciaEspaciosProductivosEl = document.getElementById("textboxProvinciaEspaciosProductivos");
-let selectProvinciasEspaciosProductivosEL = document.getElementById("selectProvinciasEspaciosProductivos");
-let selectProvinciasParcelasEL = document.getElementById("selectProvinciasParcelas");
-let textboxProvinciaParcelasEl = document.getElementById("textboxProvinciaParcelas");
-// let textboxMunicipioEspaciosProductivosEl = document.getElementById("textboxMunicipioEspaciosProductivos");
-let SelectMunicipiosEspaciosProductivosEL = document.getElementById("selectMunicipiosEspaciosProductivos");
-let selectMunicipiosParcelasEL = document.getElementById("selectMunicipiosParcelas");
-let textboxMunicipioParcelasEl = document.getElementById("textboxMunicipioParcelas");
-let SelectTipologiaEspaciosProductivosEl = document.getElementById("selectTipologiaEspaciosProductivos");
-let SelectSubTipologiaEspaciosProductivosEl = document.getElementById("selectSubTipologiaEspaciosProductivos");
-let SelectTipologiaParcelasEl = document.getElementById("selectTipologiaParcelas");
-let textboxNombreEspacioProductivoEl = document.getElementById("textboxNombreEspacioProductivo");
-let SelectActividadEl = document.getElementById("selectActividad");
-let textboxEspacioProductivoEl = document.getElementById("textboxEspacioProductivo");
-let textboxEstablecimientoEl = document.getElementById("textboxEstablecimiento");
-let textboxEspacioProductivoParcelasEl = document.getElementById("textboxEspacioProductivoParcelas");
-
-
-let resultsEl = document.getElementById("results");
-let paginationEl = document.getElementById("pagination");
-let previusPageEl = document.getElementById("previusPage");
-let nextPageEl = document.getElementById("nextPage");
-let recordsTotalEl = document.getElementById("recordsTotal");
-let recordsNumberEl = document.getElementById("recordsNumber");
-// textboxProvinciaEspaciosProductivosEl.addEventListener("input", enableButtons);
 
 
 
@@ -121,13 +331,13 @@ const configSearchPanel = {
     selectedFeatures: selectedFeatures,
     activedPanel: activedPanel,
     rowResult: rowResult,
-    selectedMunicipiosParcelas:selectedMunicipiosParcelas,
-    selectedProvinciasParcelas:selectedProvinciasParcelas,
-    selectedTipologiaParcelas:selectedTipologiaParcelas,
-    selectedTipologiaEspaciosProductivos:selectedTipologiaEspaciosProductivos,
-    espaciosProductivosList:espaciosProductivosList
+    selectedMunicipiosParcelas: selectedMunicipiosParcelas,
+    selectedProvinciasParcelas: selectedProvinciasParcelas,
+    selectedTipologiaParcelas: selectedTipologiaParcelas,
+    selectedTipologiaEspaciosProductivos: selectedTipologiaEspaciosProductivos,
+    espaciosProductivosList: espaciosProductivosList
   },
-  selector: {    
+  selector: {
   },
 };
 

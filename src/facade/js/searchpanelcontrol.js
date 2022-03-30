@@ -150,7 +150,7 @@ export default class SearchPanelControl extends M.Control {
           selected.push(option.value);
         }
       }
-      
+
       if (selected.indexOf("all") != -1) {
         selected = ["*"]
       }
@@ -162,6 +162,7 @@ export default class SearchPanelControl extends M.Control {
     });
 
     this.config.selector.selectProvinciasEspaciosProductivosEL.addEventListener('click', () => {
+      this.config.selector.selectProvinciasEspaciosProductivosEL.options[0].disabled=true;
       this.config.selector.selectProvinciasEspaciosProductivosEL.multiple = true;
       this.enableButtons();
 
@@ -183,6 +184,7 @@ export default class SearchPanelControl extends M.Control {
     });
 
     this.config.selector.selectProvinciasParcelasEL.addEventListener('click', () => {
+      this.config.selector.selectProvinciasParcelasEL.options[0].disabled=true;
       this.config.selector.selectProvinciasParcelasEL.multiple = true;
       this.enableButtons();
     });
@@ -203,7 +205,7 @@ export default class SearchPanelControl extends M.Control {
         this.config.variables.selectedMunicipiosEspaciosProductivos = ["*"]
       }
       this.enableButtons();
-      
+
     });
 
     this.config.selector.selectMunicipiosParcelasEL.addEventListener('click', () => {
@@ -212,6 +214,7 @@ export default class SearchPanelControl extends M.Control {
     });
 
     this.config.selector.SelectTipologiaEspaciosProductivosEl.addEventListener('click', () => {
+      this.config.selector.SelectTipologiaEspaciosProductivosEl.options[0].disabled=true;
       this.config.selector.SelectTipologiaEspaciosProductivosEl.multiple = true;
       this.enableButtons();
     });
@@ -227,7 +230,7 @@ export default class SearchPanelControl extends M.Control {
         this.config.variables.selectedTipologiasEspaciosProductivos = ["*"]
       }
       this.enableButtons();
-      
+
 
     });
 
@@ -237,7 +240,7 @@ export default class SearchPanelControl extends M.Control {
       this.enableButtons();
     });
 
-    this.config.selector.SelectTipologiaParcelasEl.addEventListener('click', () => {
+    this.config.selector.SelectTipologiaParcelasEl.addEventListener('click', () => {      
       this.config.selector.SelectTipologiaParcelasEl.multiple = true;
       this.enableButtons();
     });
@@ -273,14 +276,14 @@ export default class SearchPanelControl extends M.Control {
 
         let target = event.target;
 
-        
+
 
         let refCatCode = target.textContent;
         let urlCatastro = 'https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCListaBienes.aspx?del=&muni=&rc1=' + refCatCode.substring(0, 7) + '&rc2=' + refCatCode.substring(7, 14);
         window.open(urlCatastro, '_blank');
       } else {
         let target = event.target;
-        
+
         if ((target.className == 'value' || target.className == 'key') && (target.textContent != 'Referencia Catastral')) {
 
           if (this.config.variables.capaGeoJSON != null) {
@@ -384,6 +387,16 @@ export default class SearchPanelControl extends M.Control {
     this.getData(this.config.variables.geosearchUrlEspaciosProductivos, this.config.variables.atributosBusqueda);
 
 
+    
+    this.map_.getPanels('panelSearchPanel')[0].on(M.evt.SHOW, () => {
+      document.querySelectorAll('div.m-area.m-bottom.m-right')[0].style.display = 'none';
+
+    });
+
+    this.map_.getPanels('panelSearchPanel')[0].on(M.evt.HIDE, () => {
+      document.querySelectorAll('div.m-area.m-bottom.m-right')[0].style.display = 'flex';
+
+    });
 
 
 
@@ -511,8 +524,10 @@ export default class SearchPanelControl extends M.Control {
   }
 
   rellenaProvincia(arrayProvincias) {
+
     this.addOptionsSelect(arrayProvincias, "selectProvinciasEspaciosProductivos", "Todas las Provincias");
     this.addOptionsSelect(arrayProvincias, "selectProvinciasParcelas", "Todas las Provincias");
+    
 
   }
 
@@ -545,11 +560,10 @@ export default class SearchPanelControl extends M.Control {
   // Función generica para actualzar options selects
   addOptionsSelect(arrayOptions, idSelect, allText) {
     let select = document.getElementById(idSelect);
-
     let opt = document.createElement('option');
     opt.appendChild(document.createTextNode(allText));
     opt.value = 'all';
-    opt.selected = true;
+    //opt.selected = true;
     select.appendChild(opt);
     for (let i = 0; i < arrayOptions.length; i++) {
       opt = document.createElement('option');
@@ -588,16 +602,16 @@ export default class SearchPanelControl extends M.Control {
     }
 
     if (this.config.variables.activedPanel == 'parcelas') {
-      
+
       this.config.variables.selectedSolridParcelas = new Array()
       if (selectedMunicipios.includes("all")) {
         for (let index = 0; index < selectedProvincias.length; index++) {
           const element = selectedProvincias[index];
-          
+
           let arrayFilter = this.config.variables.arrayObjetosRecuperados.filter(obj => {
             return obj.provincia === element
           });
-          
+
           for (let index = 0; index < arrayFilter.length; index++) {
             this.config.variables.selectedSolridParcelas.push(arrayFilter[index]);
           }
@@ -614,7 +628,7 @@ export default class SearchPanelControl extends M.Control {
           }
         }
       }
-      
+
     }
 
 
@@ -721,7 +735,7 @@ export default class SearchPanelControl extends M.Control {
 
   clear() {
 
-    this.config.variables.selectedTipologiasEspaciosProductivos=new Array();
+    this.config.variables.selectedTipologiasEspaciosProductivos = new Array();
 
 
 
@@ -806,7 +820,7 @@ export default class SearchPanelControl extends M.Control {
     this.config.variables.selectedTipologiaParcelas = new Array()
 
 
-    
+
 
 
     for (let option of this.config.selector.selectProvinciasEspaciosProductivosEL.options) {
@@ -836,12 +850,12 @@ export default class SearchPanelControl extends M.Control {
         this.config.variables.selectedTipologiaEspaciosProductivos.push(option.value);
       }
     }
-    
+
     if (this.config.variables.selectedTipologiaEspaciosProductivos.indexOf("all") != -1) {
       this.config.variables.selectedTipologiaEspaciosProductivos = ["all"]
     }
 
-    //Javier Parcelas
+    
 
     for (let option of this.config.selector.selectProvinciasParcelasEL.options) {
       if (option.selected) {
@@ -871,10 +885,10 @@ export default class SearchPanelControl extends M.Control {
       this.config.variables.selectedTipologiaParcelas = ["*"]
     }
 
+
+
+
     
-
-
-    //fin Javier
 
     let geosearchUrl = null;
     let query = "";
@@ -918,7 +932,7 @@ export default class SearchPanelControl extends M.Control {
     if (this.config.variables.activedPanel == "espaciosProductivos") {
       geosearchUrl = this.config.variables.geosearchUrlEspaciosProductivos;
 
-      
+
       if (this.config.variables.selectedSolridEspaciosProductivos.length != 0) {
         let query = ""
         for (let index = 0; index < this.config.variables.selectedSolridEspaciosProductivos.length; index++) {
@@ -935,7 +949,7 @@ export default class SearchPanelControl extends M.Control {
         let query = ""
         for (let index = 0; index < this.config.variables.selectedTipologiasEspaciosProductivos.length; index++) {
           const element = this.config.variables.selectedTipologiasEspaciosProductivos[index];
-         
+
           if (element == "*" && index == 0) {
             query = query + "tipologia:" + element
           } else if (index == 0 && element != "*") {
@@ -959,42 +973,42 @@ export default class SearchPanelControl extends M.Control {
     if (this.config.variables.activedPanel == "parcelas") {
       geosearchUrl = this.config.variables.geosearchUrlParcelas;
       if (provinciaParcela.length != 0) {
-        query += "(provincia:";        
+        query += "(provincia:";
         for (let i = 0; i < provinciaParcela.length; i++) {
           if (i == provinciaParcela.length - 1) {
-            query += '"' + provinciaParcela[i] + '")';            
+            query += '"' + provinciaParcela[i] + '")';
           } else {
-            query += '"' + provinciaParcela[i] + '",';            
+            query += '"' + provinciaParcela[i] + '",';
           }
         }
       }
       if (municipioParcela.length != 0) {
-        query += "AND(municipio:";        
+        query += "AND(municipio:";
         for (let i = 0; i < municipioParcela.length; i++) {
           if (i == municipioParcela.length - 1) {
-            query += '"' + municipioParcela[i] + '")';            
+            query += '"' + municipioParcela[i] + '")';
           } else {
-            query += '"' + municipioParcela[i] + '",';            
+            query += '"' + municipioParcela[i] + '",';
           }
         }
       }
       if (tipologiaParcelas.length != 0) {
         fieldList.push("rango:" + '"' + tipologiaParcelas + '"');
-        query += "AND(rango:";        
+        query += "AND(rango:";
         for (let i = 0; i < tipologiaParcelas.length; i++) {
           if (i == tipologiaParcelas.length - 1) {
-            query += '"' + tipologiaParcelas[i] + '")';            
+            query += '"' + tipologiaParcelas[i] + '")';
           } else {
-            query += '"' + tipologiaParcelas[i] + '",';            
+            query += '"' + tipologiaParcelas[i] + '",';
           }
         }
       }
       if (espacioProductivoParcelas != "") {
-        query += "AND(nombre:" + '"' + espacioProductivoParcelas + '")';        
+        query += "AND(nombre:" + '"' + espacioProductivoParcelas + '")';
       }
     }
-    
-    if ((this.config.variables.activedPanel == "espaciosProductivos")||(this.config.variables.activedPanel == "empresas")) {
+
+    if ((this.config.variables.activedPanel == "espaciosProductivos") || (this.config.variables.activedPanel == "empresas")) {
       if (fieldList.length == 1) {
         query = "(" + fieldList[0] + ")";
       } else {
@@ -1007,7 +1021,7 @@ export default class SearchPanelControl extends M.Control {
         }
       }
     }
-    
+
 
 
     M.remote.get(geosearchUrl + encodeURI(query) + this.config.variables.otherParameters).then((res) => {
@@ -1028,7 +1042,7 @@ export default class SearchPanelControl extends M.Control {
       });
 
       this.showResult(this.config.variables.arrayFeaturesMapeaGeoJSON);
-      
+
     });
   }
 
@@ -1055,7 +1069,7 @@ export default class SearchPanelControl extends M.Control {
         this.config.variables.page_total = this.config.variables.totalRecords / this.config.variables.maxRecordsPage;
       } else {
         this.config.variables.page_total = Math.floor(this.config.variables.totalRecords / this.config.variables.maxRecordsPage) + 1;
-        //this.config.selector.paginationEl.style.display = "block";
+
       }
 
       let paginatedRecords = this.paginate(this.config.variables.dataList, this.config.variables.maxRecordsPage, this.config.variables.page_number);

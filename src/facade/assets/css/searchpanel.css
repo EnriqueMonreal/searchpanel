@@ -1,12 +1,17 @@
 /** Estilos sobreescritos */
-.g-cartografia-flecha-izquierda {
-  color: #00796B !important;
+.g-cartografia-prismaticos {
+  color: #ffffff !important;
 }
 .g-cartografia-flecha-derecha {
   color: #536DFE !important;
 }
 .m-control.activated>button {
   color: rgb(255, 0, 0) !important;
+  
+}
+
+.m-areas > div.m-area > div.m-panel.collapsed > button.m-panel-btn.g-cartografia-prismaticos{
+  background-color: #00897b !important;
 }
 
 /** Estilos propios*/
@@ -38,14 +43,28 @@
     -webkit-font-smoothing: antialiased;
 }
 
+
+
 .m-searchpanel.collapsed{
   height: 40px;
   width: 40px;
 
 }
+
+.m-searchpanel.collapsed > button{
+  background-color: #00897b !important;
+
+}
+
+.m-area.m-top.m-right .m-panel.m-searchpanel{
+  background-color: #ffffff !important;
+}
 .m-searchpanel.opened{
   width: 510px;
   height: 100vh;
+  margin-top: 0px !important;
+  margin-right: 0px !important;
+ 
   
 }
 
@@ -135,7 +154,30 @@ div.opciones-busqueda{
 }
 
 select {
-  height: 25px;
+  height: 25px;  
+  width: 100%;
+  cursor: pointer;
+  padding: 0 7px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #6c6c6c;    
+}
+
+
+
+@keyframes openSelect {
+  from {opacity: 0; height: 25px;}
+  to { opacity: 1; height: 75px;}
+}
+
+
+select[multiple] {    
+  animation-name: openSelect;
+  animation-duration: 0.5s; 
+  animation-timing-function: ease-in; 
+  opacity: 1;
+  height: 75px;
   width: 100%;
   cursor: pointer;
   padding: 0 7px;
@@ -146,21 +188,6 @@ select {
   
 }
 
-select[multiple] {
-  height: auto;
-  width: 100%;
-  cursor: pointer;
-  padding: 0 7px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  color: #6c6c6c;
-}
-/* select[multiple]:focus,
-select[multiple]:active {
-  size: 3;
-  height: auto; 
-} */
 
 input[type="text"] {
   display: block !important;
@@ -215,7 +242,7 @@ div.button > button {
   opacity: 0.75;
   -webkit-transition: opacity 0.25s ease 0s;
   transition: opacity 0.25s ease 0s;
-  color: #404040;
+  color: #404040 !important;
 }
 
 div.button > button:disabled {
@@ -283,8 +310,7 @@ input[type='checkbox']:checked + .slider:before {
   height: 130px;
   padding-left: 10px;
   padding-right: 10px;
-  padding-bottom: 10px;
-  /* cursor: pointer; */
+  padding-bottom: 10px;  
   cursor: pointer;
   margin: 0;
   border-top: 1px solid #00897b;
